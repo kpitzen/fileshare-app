@@ -1,0 +1,18 @@
+[package]
+name = "fileshare-app"
+version = "0.1.0"
+authors = ["kpitzen <kyle.pitzen@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+actix-web = "3"
+sqlx = { version = "0.4.2", features = [ "runtime-actix-rustls", "postgres", "json", "migrate" ] }
+dirs = "3.0"
+toml = "0.4.2"
+serde = "1.0.117"
+env_logger = "0.6.1"
+
+[dev-dependencies]
+cargo-watch = "^7.5.0"
+actix-rt = "1.1.1"
+http = "0.2.1"
