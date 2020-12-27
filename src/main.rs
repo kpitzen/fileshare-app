@@ -39,7 +39,12 @@ async fn main() -> Result<(), std::io::Error> {
                 )
             )
     );
-    server.bind("127.0.0.1:5002")?
+    let server_address = format!(
+        "{host}:{port}",
+        host=app_config.app_config.host,
+        port=app_config.app_config.port
+    );
+    server.bind(server_address)?
         .run()
         .await
 }

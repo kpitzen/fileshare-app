@@ -8,9 +8,15 @@ extern crate toml;
 
 #[derive(Deserialize, Debug, Serialize)]
 pub struct Config {
+    pub app_config: AppConfig,
     pub postgres: PostgresConfig,
 }
 
+#[derive(Deserialize, Debug, Serialize)]
+pub struct AppConfig {
+    pub host: String,
+    pub port: u16,
+}
 
 #[derive(Deserialize, Debug, Serialize)]
 pub struct PostgresConfig {
