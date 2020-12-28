@@ -1,5 +1,5 @@
 [package]
-name = "fileshare-app"
+name = "mercury"
 version = "0.1.0"
 authors = ["kpitzen <kyle.pitzen@gmail.com>"]
 edition = "2018"

@@ -9,7 +9,7 @@ mod models;
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
     let config_path = format!(
-        "{home_dir}/.config/fileshare-app.toml",
+        "{home_dir}/.config/mercury.toml",
         home_dir = dirs::home_dir().unwrap().to_str().unwrap()
     );
 

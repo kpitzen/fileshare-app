@@ -7,7 +7,7 @@ host='localhost'
 port=5432
 username='postgres'
 password='password'
-database='fileshare'
+database='mercury'
 
 [logging_config]
 sqlx_log_level='info'
