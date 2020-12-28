@@ -5,8 +5,15 @@ use toml;
 
 #[derive(Deserialize, Debug, Serialize)]
 pub struct Config {
+    pub logging_config: LoggingConfig,
     pub app_config: AppConfig,
     pub postgres: PostgresConfig,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct LoggingConfig {
+    pub sqlx_log_level: String,
+    pub actix_web_log_level: String,
 }
 
 #[derive(Deserialize, Debug, Serialize)]

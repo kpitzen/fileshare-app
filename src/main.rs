@@ -14,6 +14,13 @@ async fn main() -> Result<(), std::io::Error> {
     );
 
     let app_config = config::reader::get_config(config_path).unwrap();
+    let logging_value = format!(
+        "actix_web={actix_level},sqlx={sqlx_level}",
+        actix_level = app_config.logging_config.actix_web_log_level,
+        sqlx_level = app_config.logging_config.sqlx_log_level
+    );
+    std::env::set_var("RUST_LOG", logging_value);
+    env_logger::init();
 
     let db_connection_string = format!(
         "postgres://{username}:{password}@{host}:{port}/{database}",
@@ -32,9 +39,7 @@ async fn main() -> Result<(), std::io::Error> {
         .await
         .expect("Failed to run migrations");
 
-    std::env::set_var("RUST_LOG", "actix_web=info");
     std::env::set_var("DATABASE_URL", db_connection_string);
-    env_logger::init();
 
     let server = HttpServer::new(move || {
         App::new()
