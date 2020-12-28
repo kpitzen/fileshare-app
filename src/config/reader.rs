@@ -1,8 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 use serde::{Deserialize, Serialize};
-
-extern crate toml;
+use toml;
 
 
 #[derive(Deserialize, Debug, Serialize)]

@@ -1,7 +1,6 @@
 use actix_web::{ App, HttpServer, web, middleware::Logger };
 use sqlx::postgres::PgPoolOptions;
-
-extern crate dirs;
+use dirs;
 
 mod config;
 mod handlers;
