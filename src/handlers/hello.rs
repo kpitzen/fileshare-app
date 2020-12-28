@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use std::fmt::Debug;
 
-use crate::models;
+use crate::models::files::File;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct HelloRequest {
@@ -16,25 +16,25 @@ pub struct HelloRequest {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct HelloResponse {
     text: String,
+    files: Option<Vec<File>>,
 }
 
 pub async fn manual_hello(body: Json<HelloRequest>) -> HttpResponse {
-    println!("Processing request body: {:?}", body.text);
     HttpResponse::Ok()
         .content_type("application/json")
         .json(HelloResponse {
             text: format!("Hey there: {text}", text = body.text),
+            files: None,
         })
 }
 
 pub async fn manual_hello_with_db(body: Json<HelloRequest>, db_pool: Data<PgPool>) -> HttpResponse {
-    println!("Processing request body: {:?}", body.text);
-    let files = models::files::File::get_all(&db_pool).await.unwrap();
-    println!("Here's some files: {:?}", files);
+    let files = File::get_all(&db_pool).await.unwrap();
     HttpResponse::Ok()
         .content_type("application/json")
         .json(HelloResponse {
             text: format!("Hey there: {text}", text = body.text),
+            files: Some(files),
         })
 }
 
@@ -50,7 +50,6 @@ mod tests {
             text: String::from("test"),
         };
         let resp = manual_hello(Json(test_request_body)).await;
-        println!("{:?}", resp);
         assert_eq!(resp.status(), http::StatusCode::OK);
     }
 

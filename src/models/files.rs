@@ -1,7 +1,7 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sqlx::{types, FromRow, PgPool};
 
-#[derive(Serialize, FromRow, Debug)]
+#[derive(Deserialize, Serialize, FromRow, Debug)]
 pub struct File {
     pub id: i32,
     pub filename: String,
