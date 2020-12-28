@@ -4,6 +4,7 @@ use sqlx::postgres::PgPoolOptions;
 
 mod config;
 mod handlers;
+mod models;
 
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
@@ -32,13 +33,19 @@ async fn main() -> Result<(), std::io::Error> {
         .expect("Failed to run migrations");
 
     std::env::set_var("RUST_LOG", "actix_web=info");
+    std::env::set_var("DATABASE_URL", db_connection_string);
     env_logger::init();
 
-    let server = HttpServer::new(|| {
+    let server = HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
             .app_data(web::JsonConfig::default())
+            .data(pool.clone())
             .route("/hey", web::post().to(handlers::hello::manual_hello))
+            .route(
+                "/heywithdb",
+                web::post().to(handlers::hello::manual_hello_with_db),
+            )
     });
     let server_address = format!(
         "{host}:{port}",
