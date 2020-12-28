@@ -1,0 +1,10 @@
+[app_config]
+host='localhost'
+port=5002
+
+[postgres]
+host='localhost'
+port=5432
+username='postgres'
+password='password'
+database='fileshare'

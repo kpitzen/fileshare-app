@@ -2,7 +2,6 @@ use std::fs::File;
 use std::io::prelude::*;
 use serde::{Deserialize, Serialize};
 
-extern crate dirs;
 extern crate toml;
 
 
@@ -28,11 +27,7 @@ pub struct PostgresConfig {
 }
 
 
-pub fn get_config() -> std::io::Result<Config> {
-    let config_path = format!(
-        "{home_dir}/.config/fileshare-app.toml",
-        home_dir = dirs::home_dir().unwrap().to_str().unwrap()
-    );
+pub fn get_config(config_path: String) -> std::io::Result<Config> {
     let mut file = File::open(config_path)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
@@ -47,6 +42,9 @@ mod tests {
     
     #[test]
     fn test_get_config() {
-        assert!(get_config().is_ok(), "Unable to get config!");
+        assert!(
+            get_config(String::from(".sample_config.toml")).is_ok(),
+            "Unable to get config!"
+        );
     }
 }
