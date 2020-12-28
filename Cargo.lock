@@ -886,22 +886,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e88a8acf291dafb59c2d96e8f59828f3838bb1a70398823ade51a84de6a6deed"
 
 [[package]]
-name = "fileshare-app"
-version = "0.1.0"
-dependencies = [
- "actix-rt",
- "actix-web",
- "cargo-watch",
- "chrono",
- "dirs",
- "env_logger 0.6.2",
- "http",
- "serde",
- "sqlx",
- "toml",
-]
-
-[[package]]
 name = "filetime"
 version = "0.2.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1473,6 +1457,22 @@ name = "memchr"
 version = "2.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ee1c47aaa256ecabcaea351eae4a9b01ef39ed810004e298d2511ed284b1525"
+
+[[package]]
+name = "mercury"
+version = "0.1.0"
+dependencies = [
+ "actix-rt",
+ "actix-web",
+ "cargo-watch",
+ "chrono",
+ "dirs",
+ "env_logger 0.6.2",
+ "http",
+ "serde",
+ "sqlx",
+ "toml",
+]
 
 [[package]]
 name = "mime"
