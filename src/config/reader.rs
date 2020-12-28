@@ -1,8 +1,7 @@
+use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::prelude::*;
-use serde::{Deserialize, Serialize};
 use toml;
-
 
 #[derive(Deserialize, Debug, Serialize)]
 pub struct Config {
@@ -25,7 +24,6 @@ pub struct PostgresConfig {
     pub database: String,
 }
 
-
 pub fn get_config(config_path: String) -> std::io::Result<Config> {
     let mut file = File::open(config_path)?;
     let mut contents = String::new();
@@ -34,11 +32,10 @@ pub fn get_config(config_path: String) -> std::io::Result<Config> {
     Ok(config)
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::get_config;
-    
+
     #[test]
     fn test_get_config() {
         assert!(
