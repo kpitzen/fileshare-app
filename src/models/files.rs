@@ -11,14 +11,9 @@ pub struct File {
 
 impl File {
     pub async fn get_all(pool: &PgPool) -> Result<Vec<File>, sqlx::Error> {
-        let mut files: Vec<File> = vec![];
         let recs = sqlx::query_as(r#"SELECT id, filename, created_at, file_object FROM files;"#)
             .fetch_all(pool)
             .await?;
-        for rec in recs {
-            files.push(rec);
-        }
-
-        Ok(files)
+        Ok(recs)
     }
 }
