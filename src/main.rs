@@ -1,12 +1,19 @@
 use actix_web::{ App, HttpServer, web, middleware::Logger };
 use sqlx::postgres::PgPoolOptions;
 
+extern crate dirs;
+
 mod config;
 mod handlers;
 
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
-    let app_config = config::reader::get_config().unwrap();
+    let config_path = format!(
+        "{home_dir}/.config/fileshare-app.toml",
+        home_dir = dirs::home_dir().unwrap().to_str().unwrap()
+    );
+
+    let app_config = config::reader::get_config(config_path).unwrap();
 
     let db_connection_string = format!(
         "postgres://{username}:{password}@{host}:{port}/{database}",
