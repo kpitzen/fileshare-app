@@ -1,6 +1,12 @@
-use actix_web::{web::Json, HttpResponse};
+use actix_web::{
+    web::{Data, Json},
+    HttpResponse,
+};
 use serde::{Deserialize, Serialize};
+use sqlx::PgPool;
 use std::fmt::Debug;
+
+use crate::models;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct HelloRequest {
@@ -14,6 +20,17 @@ pub struct HelloResponse {
 
 pub async fn manual_hello(body: Json<HelloRequest>) -> HttpResponse {
     println!("Processing request body: {:?}", body.text);
+    HttpResponse::Ok()
+        .content_type("application/json")
+        .json(HelloResponse {
+            text: format!("Hey there: {text}", text = body.text),
+        })
+}
+
+pub async fn manual_hello_with_db(body: Json<HelloRequest>, db_pool: Data<PgPool>) -> HttpResponse {
+    println!("Processing request body: {:?}", body.text);
+    let files = models::files::File::get_all(&db_pool).await.unwrap();
+    println!("Here's some files: {:?}", files);
     HttpResponse::Ok()
         .content_type("application/json")
         .json(HelloResponse {
